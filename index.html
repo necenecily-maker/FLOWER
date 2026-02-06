@@ -4,15 +4,17 @@
 <meta charset="UTF-8">
 <title>Happy Flower Day 💐</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 <style>
     body {
         margin: 0;
         height: 100vh;
         overflow: hidden;
         background: linear-gradient(135deg, #ffd6eb, #fff0f8, #fff9d6);
-        font-family: 'Poppins', sans-serif;
     }
 
+    /* 🌸 Floating emojis */
     .float {
         position: absolute;
         font-size: 28px;
@@ -20,24 +22,22 @@
         pointer-events: none;
     }
 
-    /* FLOAT MUCH HIGHER */
+    /* Float ONLY till 3/4th screen */
     @keyframes floatUp {
         0% {
             transform: translateY(0) scale(0.5);
             opacity: 0;
         }
-        20% {
-            opacity: 1;
-        }
+        20% { opacity: 1; }
         100% {
-            transform: translateY(-650px) rotate(360deg);
+            transform: translateY(-75vh) rotate(360deg);
             opacity: 0;
         }
     }
 
+    /* ✨ Sparkles */
     .sparkle {
         position: absolute;
-        color: gold;
         font-size: 14px;
         animation: sparkle 2s linear forwards;
     }
@@ -47,33 +47,31 @@
         to { opacity: 0; transform: scale(2) rotate(180deg); }
     }
 
+    /* 💖 Message card UP */
     .card {
         position: absolute;
-        top: 50%;
+        top: 12%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 255, 255, 0.65);
-        padding: 28px;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.65);
+        padding: 30px;
         border-radius: 22px;
         text-align: center;
         box-shadow: 0 14px 38px rgba(0,0,0,0.18);
-        width: 86%;
-        max-width: 400px;
+        width: 88%;
+        max-width: 420px;
     }
 
-    /* FIX SPACING */
     .text {
+        font-family: 'Pacifico', cursive;
         color: #d63384;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 1.8;
-        white-space: pre-line;
-        min-height: 240px;
+        font-size: 22px;
+        line-height: 2.1;
     }
 
     .hint {
         position: fixed;
-        bottom: 14px;
+        bottom: 12px;
         width: 100%;
         text-align: center;
         font-size: 14px;
@@ -95,27 +93,31 @@
 </audio>
 
 <script>
-/* 💌 MESSAGE WITH PROPER SPACING */
-const message =
-"🌞 U ARE THE SUN TO MY SUNSHINE 🌞\n\n\n" +
-"MY BABYYYYYYYYY 💕\n\n\n" +
-"HAPPY FLOWER DAY MY LOVE 🌸💐\n" +
-"SWEETU PIEUTU PIE 🧁\n\n\n" +
-"MWAHHHHHHHHHHHHHHH 💋💋💋\n\n\n" +
-"I LOVE U VERY SO MUCH 💖";
+/* 💌 MESSAGE AS LINES (THIS FIXES SPACING) */
+const lines = [
+  "🌞 U ARE THE SUN TO MY SUNSHINE 🌞",
+  "",
+  "MY BABYYYYYYYYY 💕",
+  "",
+  "HAPPY FLOWER DAY MY LOVE 🌸💐",
+  "SWEETU PIEUTU PIE 🧁",
+  "",
+  "MWAHHHHHHHHHHHHHHH 💋💋💋",
+  "",
+  "I LOVE U VERY SO MUCH 💖"
+];
 
-/* ⌨️ SLOWER, SMOOTHER TYPING */
-let i = 0;
-function typeText() {
-    if (i < message.length) {
-        document.getElementById("typedText").innerText += message.charAt(i);
-        i++;
-        setTimeout(typeText, 45);
+let lineIndex = 0;
+function typeLines() {
+    if (lineIndex < lines.length) {
+        document.getElementById("typedText").innerHTML += lines[lineIndex] + "<br><br>";
+        lineIndex++;
+        setTimeout(typeLines, 450);
     }
 }
-typeText();
+typeLines();
 
-/* 🌸💖 FLOATING FLOWERS + HEARTS */
+/* 🌸💖 Floating flowers + hearts */
 const emojis = ["🌸","🌺","🌻","🌹","🌷","🌼","💐","💖","💗","💕","❤️"];
 
 function createFloat() {
@@ -131,22 +133,24 @@ function createFloat() {
     setTimeout(() => el.remove(), 7000);
 }
 
-setInterval(createFloat, 260);
+setInterval(createFloat, 300);
 
-/* ✨ SPARKLES ON TAP */
+/* ✨ Sparkles on tap (below text area) */
 document.addEventListener("click", (e) => {
-    for (let s = 0; s < 10; s++) {
-        const sp = document.createElement("div");
-        sp.className = "sparkle";
-        sp.innerText = "✨";
-        sp.style.left = e.clientX + Math.random()*40 - 20 + "px";
-        sp.style.top = e.clientY + Math.random()*40 - 20 + "px";
-        document.body.appendChild(sp);
-        setTimeout(() => sp.remove(), 2000);
+    if (e.clientY > window.innerHeight * 0.35) {
+        for (let i = 0; i < 10; i++) {
+            const sp = document.createElement("div");
+            sp.className = "sparkle";
+            sp.innerText = "✨";
+            sp.style.left = e.clientX + Math.random()*40 - 20 + "px";
+            sp.style.top = e.clientY + Math.random()*40 - 20 + "px";
+            document.body.appendChild(sp);
+            setTimeout(() => sp.remove(), 2000);
+        }
     }
 });
 
-/* 🎵 MUSIC */
+/* 🎵 Music */
 document.body.addEventListener("click", () => {
     document.getElementById("bgMusic").play();
 }, { once: true });
