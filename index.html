@@ -13,64 +13,62 @@
         font-family: 'Poppins', sans-serif;
     }
 
-    /* Floating emojis */
     .float {
         position: absolute;
-        font-size: 26px;
-        animation: floatUp 5s ease-out forwards;
+        font-size: 28px;
+        animation: floatUp 7s ease-out forwards;
         pointer-events: none;
     }
 
+    /* FLOAT MUCH HIGHER */
     @keyframes floatUp {
         0% {
-            transform: translateY(0) scale(0.4);
+            transform: translateY(0) scale(0.5);
             opacity: 0;
         }
-        30% {
+        20% {
             opacity: 1;
-            transform: scale(1.2);
         }
         100% {
-            transform: translateY(-400px) rotate(360deg);
+            transform: translateY(-650px) rotate(360deg);
             opacity: 0;
         }
     }
 
-    /* Sparkles */
     .sparkle {
         position: absolute;
         color: gold;
         font-size: 14px;
-        animation: sparkle 1.8s linear forwards;
+        animation: sparkle 2s linear forwards;
     }
 
     @keyframes sparkle {
-        0% { opacity: 1; transform: scale(0.5); }
-        100% { opacity: 0; transform: scale(1.8) rotate(180deg); }
+        from { opacity: 1; transform: scale(0.6); }
+        to { opacity: 0; transform: scale(2) rotate(180deg); }
     }
 
-    /* Message card */
     .card {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background: rgba(255, 255, 255, 0.65);
-        padding: 26px;
+        padding: 28px;
         border-radius: 22px;
         text-align: center;
-        box-shadow: 0 12px 35px rgba(0,0,0,0.18);
-        width: 85%;
-        max-width: 390px;
+        box-shadow: 0 14px 38px rgba(0,0,0,0.18);
+        width: 86%;
+        max-width: 400px;
     }
 
+    /* FIX SPACING */
     .text {
         color: #d63384;
         font-size: 18px;
         font-weight: 600;
-        line-height: 1.5;
+        line-height: 1.8;
         white-space: pre-line;
-        min-height: 200px;
+        min-height: 240px;
     }
 
     .hint {
@@ -97,27 +95,27 @@
 </audio>
 
 <script>
-// 💌 Message text
-const message = 
-"🌞 U ARE THE SUN TO MY SUNSHINE 🌞\n\n" +
-"MY BABYYYYYYYYY 💕\n\n" +
+/* 💌 MESSAGE WITH PROPER SPACING */
+const message =
+"🌞 U ARE THE SUN TO MY SUNSHINE 🌞\n\n\n" +
+"MY BABYYYYYYYYY 💕\n\n\n" +
 "HAPPY FLOWER DAY MY LOVE 🌸💐\n" +
-"SWEETU PIEUTU PIE 🧁\n\n" +
-"MWAHHHHHHHHHHHHHHH 💋💋💋\n\n" +
+"SWEETU PIEUTU PIE 🧁\n\n\n" +
+"MWAHHHHHHHHHHHHHHH 💋💋💋\n\n\n" +
 "I LOVE U VERY SO MUCH 💖";
 
-// ✨ Typing animation
+/* ⌨️ SLOWER, SMOOTHER TYPING */
 let i = 0;
 function typeText() {
     if (i < message.length) {
         document.getElementById("typedText").innerText += message.charAt(i);
         i++;
-        setTimeout(typeText, 35);
+        setTimeout(typeText, 45);
     }
 }
 typeText();
 
-// 🌸💖 Floating flowers + hearts
+/* 🌸💖 FLOATING FLOWERS + HEARTS */
 const emojis = ["🌸","🌺","🌻","🌹","🌷","🌼","💐","💖","💗","💕","❤️"];
 
 function createFloat() {
@@ -126,29 +124,29 @@ function createFloat() {
     el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
 
     el.style.left = Math.random() * window.innerWidth + "px";
-    el.style.bottom = "-40px";
-    el.style.fontSize = (22 + Math.random() * 20) + "px";
+    el.style.bottom = "-60px";
+    el.style.fontSize = (24 + Math.random() * 22) + "px";
 
     document.body.appendChild(el);
-    setTimeout(() => el.remove(), 5000);
+    setTimeout(() => el.remove(), 7000);
 }
 
-setInterval(createFloat, 240);
+setInterval(createFloat, 260);
 
-// ✨ Sparkles on tap
+/* ✨ SPARKLES ON TAP */
 document.addEventListener("click", (e) => {
-    for (let s = 0; s < 8; s++) {
+    for (let s = 0; s < 10; s++) {
         const sp = document.createElement("div");
         sp.className = "sparkle";
         sp.innerText = "✨";
-        sp.style.left = e.clientX + Math.random()*30 - 15 + "px";
-        sp.style.top = e.clientY + Math.random()*30 - 15 + "px";
+        sp.style.left = e.clientX + Math.random()*40 - 20 + "px";
+        sp.style.top = e.clientY + Math.random()*40 - 20 + "px";
         document.body.appendChild(sp);
-        setTimeout(() => sp.remove(), 1800);
+        setTimeout(() => sp.remove(), 2000);
     }
 });
 
-// 🎵 Music (tap to play – mobile safe)
+/* 🎵 MUSIC */
 document.body.addEventListener("click", () => {
     document.getElementById("bgMusic").play();
 }, { once: true });
